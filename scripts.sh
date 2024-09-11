@@ -15,11 +15,19 @@ upgrade-discord(){
 # $ big-files ./some-root-folder 100
 # Осторожно, операция довольно затратная для больших директорий, будет исполняться примерно 10 сек
 big-files() {
-    local start_folder=${1:-~}
-    local num_files=${2:-10}
-    
+    local start_folder="$HOME"
+    local num_files=10
+
+    if [ $# -eq 1 ]; then
+        num_files=$1
+    elif [ $# -eq 2 ]; then
+        start_folder=$1
+        num_files=$2
+    fi
+
     du -ah "$start_folder" | sort -hr | head -n "$num_files"
 }
+
 
 # 4) Тупо открывает вашу репу из терминала в браузере, пока вы работаете над ней, дабы не переключаться между окнами.
 github(){
